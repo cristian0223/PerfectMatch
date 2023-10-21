@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using PerfectMatch.API.Data;
 using PerfectMatch.Shared.Entities;
-using PerfectMatch.API.Data;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 
@@ -10,7 +9,7 @@ namespace PerfectMatch.API.Controllers
 {
     [ApiController]
     [Route("/api/Post")]
-    public class PostController: ControllerBase
+    public class PostController : ControllerBase
     {
 
         private readonly DataContext _context;
@@ -46,7 +45,7 @@ namespace PerfectMatch.API.Controllers
             return Ok(post);
         }
 
-        //POST (INGRESAR PERFIL)
+        //POST (CREAR)
         [HttpPost]
         public async Task<ActionResult> Post(Post post)
         {
@@ -54,6 +53,33 @@ namespace PerfectMatch.API.Controllers
             await _context.SaveChangesAsync();
             return Ok(post);
         }
+
+        //PUT (ACTUALIZAR)
+
+        public async Task<ActionResult> Put(Post post)
+        {
+            _context.Update(post);
+            await _context.SaveChangesAsync();
+            return Ok(post);
+        }
+
+        //DELETE (ELIMINAR)
+        [HttpDelete("{id:int}")]
+
+        public async Task<ActionResult> Delete(int id)
+        {
+            var filaAfectada = await _context.Posts
+                .Where(x => x.Id == id)
+                .ExecuteDeleteAsync();
+            if(filaAfectada == 0)
+            {
+
+
+                return NotFound();
+            }
+            return NoContent();
+        }
+
 
     }
 }

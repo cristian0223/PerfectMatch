@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using PerfectMatch.API.Data;
 using PerfectMatch.Shared.Entities;
-using PerfectMatch.API.Data;
 
 namespace PerfectMatch.API.Controllers
 {
@@ -43,7 +42,7 @@ namespace PerfectMatch.API.Controllers
             return Ok(notification);
         }
 
-        //POST (INGRESAR PERFIL)
+        //POST (CREAR)
         [HttpPost]
         public async Task<ActionResult> Post(Notification notification)
         {
@@ -51,6 +50,34 @@ namespace PerfectMatch.API.Controllers
             await _context.SaveChangesAsync();
             return Ok(notification);
         }
+
+        //PUT ACTUALIZAR
+        [HttpPut]
+        public async Task<ActionResult> Put(Notification notification)
+        {
+            _context.Update(notification);
+            await _context.SaveChangesAsync();
+            return Ok(notification);
+        }
+
+        //DELETE (ELIMINAR)
+
+        [HttpDelete ("{id:itn}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var FilaAfectada = await _context.Notifications
+                .Where(x => x.Id == id)
+                .ExecuteDeleteAsync();
+            if(FilaAfectada == 0)
+            {
+
+                return NotFound();
+            }
+            return NoContent();
+        }
+
+
+
 
     }
 }

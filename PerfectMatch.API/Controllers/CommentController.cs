@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using PerfectMatch.API.Data;
 using PerfectMatch.Shared.Entities;
-using PerfectMatch.API.Data;
 using Microsoft.Extensions.Logging;
 
 
@@ -10,7 +9,7 @@ namespace PerfectMatch.API.Controllers
 {
     [ApiController]
     [Route("/api/Comment")]
-    public class CommentController: ControllerBase
+    public class CommentController : ControllerBase
     {
 
         private readonly DataContext _context;
@@ -46,13 +45,41 @@ namespace PerfectMatch.API.Controllers
             return Ok(comment);
         }
 
-        //POST (INGRESAR PERFIL)
+        //POST (CREAR)
         [HttpPost]
         public async Task<ActionResult> Post(Comment comment)
         {
             _context.Add(comment);
             await _context.SaveChangesAsync();
             return Ok(comment);
+        }
+
+        //PUT Actualizar 
+
+        [HttpPut]
+        public async Task<ActionResult> Put(Comment comment)
+        {
+            _context.Update(comment);
+            await _context.SaveChangesAsync();
+            return Ok(comment);
+        }
+
+        [HttpDelete ("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var filaAfectada = await _context.Comments
+                .Where(x => x.Id == id)
+                .ExecuteDeleteAsync();
+
+            if(filaAfectada == 0)
+            {
+
+                
+                return NotFound();
+            }
+
+            return NoContent(); 
+            
         }
 
     }

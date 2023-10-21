@@ -2,7 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using PerfectMatch.API.Data;
 using PerfectMatch.Shared.Entities;
-using PerfectMatch.API.Data;
+using Microsoft.AspNetCore.Authentication;
+
 
 namespace PerfectMatch.API.Controllers
 {
@@ -43,13 +44,39 @@ namespace PerfectMatch.API.Controllers
             return Ok(appointment);
         }
 
-        //POST (INGRESAR PERFIL)
+        //POST (CREAR)
         [HttpPost]
         public async Task<ActionResult> Post(Appointment appointment)
         {
             _context.Add(appointment);
             await _context.SaveChangesAsync();
             return Ok(appointment);
+        }
+
+        //PUT (ACTUALIZAR)
+        [HttpPut]
+        public async Task<ActionResult> Put(Appointment appointment)
+        {
+            _context.Update(appointment);
+            await _context.SaveChangesAsync();
+            return Ok(appointment);
+        }
+
+        //DELETE (ELIMINAR)
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var filaAfectada = await _context.Appointments
+                .Where(x => x.Id == id)
+                .ExecuteDeleteAsync();
+            if(filaAfectada == 0)
+            {
+
+                return NotFound();
+            }
+            return NoContent();
+
+
         }
 
     }
