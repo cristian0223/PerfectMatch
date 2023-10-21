@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using PerfectMatch.API.Data;
 using PerfectMatch.Shared.Entities;
-using PerfectMatch.API.Data;
 
 namespace PerfectMatch.API.Controllers
 {

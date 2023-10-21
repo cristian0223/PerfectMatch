@@ -14,9 +14,6 @@ namespace PerfectMatch.Shared.Entities
         [Required(ErrorMessage = "La edad es obligatoria.")]
         public int age { get; set; }
 
-        [Required(ErrorMessage = "La ubicación es obligatoria.")]
-        public string Ubication { get; set; }
-
         [Required(ErrorMessage = "La descripción personal es obligatoria.")]
         public string PersonalDescription { get; set; }
 
@@ -34,7 +31,7 @@ namespace PerfectMatch.Shared.Entities
 
         public string AdditionalPhotos { get; set; }
 
-        public string LinkNetwors { get; set; }
+        public string LinkNetworks { get; set; }
 
         public float Height { get; set; }
 
