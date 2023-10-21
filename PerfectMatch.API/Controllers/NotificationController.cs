@@ -51,7 +51,7 @@ namespace PerfectMatch.API.Controllers
             return Ok(notification);
         }
 
-        //PUT ACTUALIZAR
+        //PUT ACTUALIZAR PERFIL
         [HttpPut]
         public async Task<ActionResult> Put(Notification notification)
         {
