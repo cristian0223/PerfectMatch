@@ -24,8 +24,10 @@ namespace PerfectMatch.Shared.Entities
         public string Interests { get; set; }
 
         [Required(ErrorMessage = "La orientación sexual es obligatoria.")]
+        [MaxLength(25)]
         public string SexualOrientation { get; set; }
 
+        [MaxLength(25)]
         public string CivilState { get; set; }
 
         public string Occupation { get; set; }
@@ -40,6 +42,7 @@ namespace PerfectMatch.Shared.Entities
 
         public int Weight { get; set; }
 
+        [MaxLength(30)]
         public string Nacionality { get; set; }
 
 

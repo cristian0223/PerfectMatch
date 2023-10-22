@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerfectMatch.Shared", "PerfectMatch.Shared\PerfectMatch.Shared.csproj", "{39E3A60E-BE72-4174-8B7A-CEF7B859056F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerfectMatch.Shared", "PerfectMatch.Shared\PerfectMatch.Shared.csproj", "{39E3A60E-BE72-4174-8B7A-CEF7B859056F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerfectMatch.API", "PerfectMatch.API\PerfectMatch.API.csproj", "{76D9A77C-3D58-4672-B524-766631FC46EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerfectMatch.API", "PerfectMatch.API\PerfectMatch.API.csproj", "{76D9A77C-3D58-4672-B524-766631FC46EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerfectMatch.WEB", "PerfectMatch.WEB\PerfectMatch.WEB.csproj", "{CF6BC543-CF4A-436B-96EE-DEFA2D5FE68F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerfectMatch.WEB", "PerfectMatch.WEB\PerfectMatch.WEB.csproj", "{CF6BC543-CF4A-436B-96EE-DEFA2D5FE68F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
