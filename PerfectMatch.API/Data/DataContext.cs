@@ -12,7 +12,6 @@ namespace PerfectMatch.API.Data
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Ubication> Ubications { get; set; }
         public DbSet<Notification> Notifications { get; set; }
-        public DbSet<Event> Events { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Post> Posts { get; set; }
