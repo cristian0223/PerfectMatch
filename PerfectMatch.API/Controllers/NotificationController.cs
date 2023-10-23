@@ -62,7 +62,7 @@ namespace PerfectMatch.API.Controllers
 
         //DELETE (ELIMINAR)
 
-        [HttpDelete ("{id:itn}")]
+        [HttpDelete ("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
             var FilaAfectada = await _context.Notifications

@@ -55,7 +55,7 @@ namespace PerfectMatch.API.Controllers
         }
 
         //PUT (ACTUALIZAR)
-
+        [HttpPut]
         public async Task<ActionResult> Put(Post post)
         {
             _context.Update(post);
