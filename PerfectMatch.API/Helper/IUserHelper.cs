@@ -19,6 +19,6 @@ namespace PerfectMatch.API.Helper
 
         Task<SignInResult> LoginAsync(LoginDTO model);
 
-        Task LogoutAsync();
+        Task LogoutAsync(); 
     }
 }

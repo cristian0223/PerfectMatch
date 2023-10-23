@@ -33,13 +33,11 @@ namespace PerfectMatch.Shared.Entities
         public string Address { get; set; } = null!;
 
         [Display(Name = "Foto")]
-        public string Photo { get; set; }
+        public string? Photo { get; set; }
 
         [Display(Name = "Tipo de usuario")]
         public UserType UserType { get; set; }
 
-        [Display(Name = "Usuario")]
-        public string FullName => $"{FirstName} {LastName}";
     }
 
 }
