@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using PerfectMatch.API.Helper;
 using PerfectMatch.Shared.DTOs;
@@ -9,6 +11,7 @@ using System.Text;
 
 namespace PerfectMatch.API.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     [Route("/api/accounts")]
     public class AccountsController : ControllerBase

@@ -4,9 +4,12 @@ using PerfectMatch.API.Data;
 using PerfectMatch.Shared.Entities;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PerfectMatch.API.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     [Route("/api/post")]
     public class PostController : ControllerBase
