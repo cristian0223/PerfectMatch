@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 namespace PerfectMatch.API.Controllers
 {
     [ApiController]
-    [Route("/api/Message")]
+    [Route("/api/message")]
     public class MesaggeController : ControllerBase
     {
 

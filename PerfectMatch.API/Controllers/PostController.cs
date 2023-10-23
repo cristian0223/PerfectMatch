@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 namespace PerfectMatch.API.Controllers
 {
     [ApiController]
-    [Route("/api/Post")]
+    [Route("/api/post")]
     public class PostController : ControllerBase
     {
 

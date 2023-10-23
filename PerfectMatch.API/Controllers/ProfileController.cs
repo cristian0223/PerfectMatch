@@ -6,7 +6,7 @@ using PerfectMatch.Shared.Entities;
 namespace PerfectMatch.API.Controllers
 {
     [ApiController]
-    [Route("/api/Profile")]
+    [Route("/api/profile")]
     public class ProfileController : ControllerBase
     {
         private readonly DataContext _context;

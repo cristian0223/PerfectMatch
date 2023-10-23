@@ -5,7 +5,7 @@ using PerfectMatch.Shared.Entities;
 namespace PerfectMatch.API.Controllers
 {
     [ApiController]
-    [Route("/api/Ubication")]
+    [Route("/api/ubication")]
     public class UbicationController: ControllerBase
     {
         private readonly DataContext _context;

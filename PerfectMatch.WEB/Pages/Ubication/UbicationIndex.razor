@@ -1,7 +1,9 @@
 ﻿@page "/ubication"
 @using PerfectMatch.WEB.Repositories;
+@using PerfectMatch.Shared.Entities;
 
-@inject IRepository Repository
+
+@inject IRepository repository
 <h3>UbicationIndex</h3>
 
 <div class="mb-3">
@@ -10,6 +12,47 @@
 
 </div>
 
+<GenericList MyList="Ubications">
+
+    <Body>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Ubication</th>
+                    <th></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var ubication in Ubications!)
+                {
+                    <tr>
+                        <td>
+                            @ubication.PlaceName
+                        </td>
+                        <td>
+                            <a class="btn btn-warning">Editar</a>
+                            <button class="btn btn-danger">Borrar</button>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </Body>
+
+</GenericList>
+
 @code {
+
+    public List<Ubication>? Ubications { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+
+        var responseHttp = await repository.Get<List<Ubication>>("/api/ubication");
+        Ubications = responseHttp.Response!;
+    }
 
 }

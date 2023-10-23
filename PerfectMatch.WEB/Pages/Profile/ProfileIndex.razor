@@ -1,5 +1,57 @@
-﻿<h3>ProfileIndex</h3>
+﻿@page "/profile"
+@using PerfectMatch.WEB.Repositories;
+@using PerfectMatch.Shared.Entities;
+
+@inject IRepository repository
+<h3>ProfileIndex</h3>
+
+<div class="mb-3">
+
+    <a class="btn btn-primary" href="/profile/create">  New Profile</a>
+
+</div>
+
+<GenericList MyList="Profiles">
+
+    <Body>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Profile</th>
+                    <th></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var profile in Profiles!)
+                {
+                    <tr>
+                        <td>
+                            @profile.PersonalDescription
+                        </td>
+                        <td>
+                            <a class="btn btn-warning">Editar</a>
+                            <button class="btn btn-danger">Borrar</button>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </Body>
+
+</GenericList>
 
 @code {
+
+    public List<Profile>? Profiles { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+
+        var responseHttp = await repository.Get<List<Profile>>("/api/profile");
+        Profiles = responseHttp.Response!;
+    }
 
 }

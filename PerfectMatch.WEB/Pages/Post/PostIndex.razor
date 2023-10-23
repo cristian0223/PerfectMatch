@@ -1,5 +1,58 @@
-﻿<h3>PostIndex</h3>
+﻿@page "/post"
+@using PerfectMatch.WEB.Repositories;
+@using PerfectMatch.Shared.Entities;
+
+
+@inject IRepository repository
+<h3>PostIndex</h3>
+
+<div class="mb-3">
+
+    <a class="btn btn-primary" href="/post/create">  New Post</a>
+
+</div>
+
+<GenericList MyList="Posts">
+
+    <Body>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Post</th>
+                    <th></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var post in Posts!)
+                {
+                    <tr>
+                        <td>
+                            @post.Title
+                        </td>
+                        <td>
+                            <a class="btn btn-warning">Editar</a>
+                            <button class="btn btn-danger">Borrar</button>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </Body>
+
+</GenericList>
 
 @code {
+
+    public List<Post>? Posts { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+
+        var responseHttp = await repository.Get<List<Post>>("/api/post");
+        Posts = responseHttp.Response!;
+    }
 
 }
