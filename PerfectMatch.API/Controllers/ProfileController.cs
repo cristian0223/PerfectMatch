@@ -7,7 +7,7 @@ using PerfectMatch.Shared.Entities;
 
 namespace PerfectMatch.API.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+//    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     [Route("/api/profile")]
     public class ProfileController : ControllerBase

@@ -11,7 +11,7 @@ using System.Text;
 
 namespace PerfectMatch.API.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     [Route("/api/accounts")]
     public class AccountsController : ControllerBase
