@@ -51,5 +51,29 @@ namespace PerfectMatch.API.Controllers
             return Ok(ubication);
         }
 
+        //PUT (ACTUALIZAR)
+        [HttpPut]
+        public async Task<ActionResult> Put(Ubication ubication)
+        {
+            _context.Update(ubication);
+            await _context.SaveChangesAsync();
+            return Ok(ubication);
+
+        }
+        // Delete (Eliminar)
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var filaAfectada = await _context.Ubications
+                .Where(x => x.Id == id)
+                .ExecuteDeleteAsync();
+            if (filaAfectada == 0)
+            {
+                return NotFound();
+
+            }
+            return NoContent();
+        }
+
     }
 }

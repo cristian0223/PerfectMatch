@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using PerfectMatch.Shared.Entities;
 
 namespace PerfectMatch.API.Data
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<User>
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -12,7 +13,6 @@ namespace PerfectMatch.API.Data
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Ubication> Ubications { get; set; }
         public DbSet<Notification> Notifications { get; set; }
-        public DbSet<Event> Events { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Post> Posts { get; set; }
@@ -20,7 +20,8 @@ namespace PerfectMatch.API.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-           // modelBuilder.Entity<Profile>().HasIndex(c => c.PersonalDescription).IsUnique();
+            //modelBuilder.Entity<Profile>().HasIndex(c => c.PersonalDescription).IsUnique();
+
         }
 
 

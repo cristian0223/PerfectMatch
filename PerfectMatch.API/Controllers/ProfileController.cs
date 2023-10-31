@@ -51,6 +51,29 @@ namespace PerfectMatch.API.Controllers
             return Ok(profile);
         }
 
+        //PUT (ACTUALIZAR)
+        [HttpPut]
+        public async Task<ActionResult> Put(Profile profile)
+        {
+            _context.Update(profile);
+            await _context.SaveChangesAsync();
+            return Ok(profile);
+        }
+
+        //Delete (ELIMINAR)
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var filaAfectada = await _context.Profiles
+                .Where(x => x.Id == id)
+                .ExecuteDeleteAsync();
+            if (filaAfectada == 0)
+            {
+
+                return NotFound();
+            }
+            return NoContent();
+        }
 
     }
 }
