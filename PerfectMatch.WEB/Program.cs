@@ -13,3 +13,4 @@ builder.Services.AddScoped<IRepository , Repository>();
 builder.Services.AddSweetAlert2();
 
 await builder.Build().RunAsync();
+ 
