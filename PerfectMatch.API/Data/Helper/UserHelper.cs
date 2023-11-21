@@ -9,8 +9,8 @@ namespace PerfectMatch.API.Helper
     public class UserHelper : IUserHelper
     {
         private readonly DataContext _context;
-        private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
         public UserHelper(DataContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager)

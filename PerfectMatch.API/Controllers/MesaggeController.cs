@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace PerfectMatch.API.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     [Route("/api/message")]
     public class MesaggeController : ControllerBase
