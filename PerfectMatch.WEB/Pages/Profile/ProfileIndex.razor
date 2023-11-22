@@ -1,6 +1,9 @@
 ﻿@page "/profile"
+@using PerfectMatch.WEB.Shared
 @using PerfectMatch.WEB.Repositories;
 @using PerfectMatch.Shared.Entities;
+@inject NavigationManager navigationManager
+@inject SweetAlertService swal
 
 @inject IRepository repository
 <h3>ProfileIndex</h3>
@@ -17,8 +20,19 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Profile</th>
-                    <th></th>
+                    <th>Edad</th>
+                    <th>Ubicaión</th>
+                    <th>Descrición personal</th>
+                    <th>Intereses</th>
+                    <th>Orientación sexual</th>
+                    <th>Estado civil</th>
+                    <th>Ocupación</th>
+                    <th>Foto del perfil</th>
+                    <th>Fotos adicionales</th>
+                    <th>Link redes sociales</th>
+                    <th>Altura</th>
+                    <th>Peso</th>
+                    <th>Nacionalidad</th>
 
                 </tr>
             </thead>
@@ -27,11 +41,49 @@
                 {
                     <tr>
                         <td>
-                            @profile.Nacionality
+                            @profile.age
                         </td>
                         <td>
-                            <a class="btn btn-warning">Editar</a>
-                            <button class="btn btn-danger">Borrar</button>
+                            @profile.Ubication
+                        </td>
+                        <td>
+                            @profile.PersonalDescription
+                        </td>
+                        <td>
+                            @profile.Interests
+                        </td>
+                        <td>
+                            @profile.SexualOrientation
+                        </td>
+                        <td>
+                            @profile.CivilState
+                        </td>
+                        <td>
+                            @profile.Occupation
+                        </td>
+                        <td>
+                            @profile.ProfilePictures
+                        </td>
+                        <td>
+                            @profile.AdditionalPhotos
+                        </td>
+                        <td>
+                            @profile.LinkNetwors
+                        </td>
+                        <td>
+                            @profile.Height
+                        </td>
+                        <td>
+                            @profile.Weight
+                        </td>
+                        <td>
+                            @profile.Nacionality
+                        </td>
+
+
+                        <td>
+                            <a class="btn btn-warning" href="/profile/edit/@profile.Id">Editar</a>
+                            <button class="btn btn-danger" @onclick=@(() => Delete(profile))>Borrar</button>
                         </td>
 
                     </tr>
@@ -49,9 +101,50 @@
 
     protected async override Task OnInitializedAsync()
     {
+        await Load();
+    }
 
-        var responseHttp = await repository.Get<List<Profile>>("/api/profile");
-        Profiles = responseHttp.Response!;
+    private async Task Load()
+    {
+        var responseHppt = await repository.Get<List<Profile>>("api/profile");
+        Profiles = responseHppt.Response!;
+    }
+
+    private async Task Delete(Profile Profile)
+    {
+        var result = await swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Confirmación",
+                Text = "¿Esta seguro que quieres borrar el registro?",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true
+            });
+
+        var confirm = string.IsNullOrEmpty(result.Value);
+
+        if (confirm)
+        {
+            return;
+        }
+
+        var responseHTTP = await repository.Delete($"api/profile/{Profile.Id}");
+
+        if (responseHTTP.Error)
+        {
+            if (responseHTTP.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                navigationManager.NavigateTo("/");
+            }
+            else
+            {
+                var mensajeError = await responseHTTP.GetErrorMessage();
+                await swal.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+            }
+        }
+        else
+        {
+            await Load();
+        }
     }
 
 }

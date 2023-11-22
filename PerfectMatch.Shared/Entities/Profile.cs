@@ -12,7 +12,7 @@ namespace PerfectMatch.Shared.Entities
         public int Id { get; set; }
 
         [Required(ErrorMessage = "La edad es obligatoria.")]
-        public int age { get; set; }
+        public String age { get; set; }
 
         [Required(ErrorMessage = "La ubicación es obligatoria.")]
         public string Ubication { get; set; }
@@ -38,9 +38,9 @@ namespace PerfectMatch.Shared.Entities
 
         public string LinkNetwors { get; set; }
 
-        public float Height { get; set; }
+        public String Height { get; set; }
 
-        public int Weight { get; set; }
+        public String Weight { get; set; }
 
         [MaxLength(30)]
         public string Nacionality { get; set; }

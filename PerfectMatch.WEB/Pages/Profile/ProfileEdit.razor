@@ -1,0 +1,67 @@
+﻿@page "/profile/edit/{id:int}"
+@using PerfectMatch.Shared.Entities;
+@inject NavigationManager navigationManager
+@inject IRepository repository
+@inject SweetAlertService swal
+
+<h3>Editar Perfil</h3>
+
+@if (Profile is null)
+{
+    <p>Cargando...</p>
+}
+else
+{
+    <ProfileForm @ref="ProfileForm" Profile="Profile" OnValidSubmit="Edit" ReturnAction="Return" />
+}
+
+@code {
+    private Profile? Profile;
+    private ProfileForm? ProfileForm;
+
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var responseHTTP = await repository.Get<Profile>($"api/profile/{Id}");
+
+        if (responseHTTP.Error)
+        {
+            if (responseHTTP.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                navigationManager.NavigateTo("profile");
+            }
+            else
+            {
+                var messageError = await responseHTTP.GetErrorMessage();
+                await swal.FireAsync("Error", messageError, SweetAlertIcon.Error);
+            }
+        }
+        else
+        {
+            Profile = responseHTTP.Response;
+        }
+    }
+
+    private async Task Edit()
+    {
+        var responseHTTP = await repository.Put("api/profile", Profile);
+
+        if (responseHTTP.Error)
+        {
+            var mensajeError = await responseHTTP.GetErrorMessage();
+            await swal.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+        }
+        else
+        {
+            ProfileForm!.FormPostedSuccessfully = true;
+            navigationManager.NavigateTo("profile");
+        }
+    }
+
+    private void Return()
+    {
+        navigationManager.NavigateTo("profile");
+    }
+}

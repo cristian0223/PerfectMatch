@@ -1,0 +1,38 @@
+﻿@page "/profile/create"
+@using PerfectMatch.Shared.Entities;
+@inject IRepository repository
+@inject NavigationManager navigationManager
+@inject SweetAlertService sweetAlertService
+
+<h3>Crear Perfil</h3>
+
+<ProfileForm @ref="ProfileForm" Profile="Profile" OnValidSubmit="Create" ReturnAction="Return" />
+
+@code {
+    private Profile Profile = new();
+
+    private ProfileForm? ProfileForm;
+
+    private async Task Create()
+    {
+        var responseHttp = await repository.Post("/api/profile", Profile);
+        if (responseHttp.Error)
+        {
+            var message = await responseHttp.GetErrorMessage();
+            await sweetAlertService.FireAsync("Error", message);
+            return;
+        }
+        else
+        {
+
+            ProfileForm!.FormPostedSuccessfully = true;
+            navigationManager.NavigateTo("/profile");
+
+        }
+    }
+
+    private void Return()
+    {
+        navigationManager.NavigateTo("/profile");
+    }
+}

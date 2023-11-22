@@ -134,7 +134,7 @@ namespace PerfectMatch.API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    age = table.Column<int>(type: "int", nullable: false),
+                    age = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Ubication = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PersonalDescription = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Interests = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -144,8 +144,8 @@ namespace PerfectMatch.API.Migrations
                     ProfilePictures = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AdditionalPhotos = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LinkNetwors = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Height = table.Column<float>(type: "real", nullable: false),
-                    Weight = table.Column<int>(type: "int", nullable: false),
+                    Height = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Weight = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Nacionality = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
@@ -159,8 +159,8 @@ namespace PerfectMatch.API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Latitude = table.Column<double>(type: "float", nullable: false),
-                    Length = table.Column<double>(type: "float", nullable: false),
+                    Latitude = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Length = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PlaceName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>

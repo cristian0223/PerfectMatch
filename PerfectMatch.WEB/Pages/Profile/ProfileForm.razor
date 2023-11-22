@@ -1,0 +1,151 @@
+﻿﻿@using PerfectMatch.Shared.Entities;
+@using CurrieTechnologies.Razor.SweetAlert2;
+@inject SweetAlertService swal
+
+<NavigationLock OnBeforeInternalNavigation="OnBeforeInternalNavigation"></NavigationLock>
+
+<EditForm EditContext="editContext" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+
+        <label>Ingresar la edad del perfil:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Profile.age" />
+            <ValidationMessage For="@(() => Profile.age)" />
+        </div>
+
+        <label>Ingresar la ubicación del perfil:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Profile.Ubication" />
+            <ValidationMessage For="@(() => Profile.Ubication)" />
+        </div>
+
+        <label>Ingresar la descripción personal del perfil:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Profile.PersonalDescription" />
+            <ValidationMessage For="@(() => Profile.PersonalDescription)" />
+        </div>
+
+        <label>Ingresar los intereses del perfil:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Profile.Interests" />
+            <ValidationMessage For="@(() => Profile.Interests)" />
+        </div>
+
+        <label>Ingresar la orientación sexual del perfil:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Profile.SexualOrientation" />
+            <ValidationMessage For="@(() => Profile.SexualOrientation)" />
+        </div>
+
+        <label>Ingresar el estado civil del perfil:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Profile.CivilState" />
+            <ValidationMessage For="@(() => Profile.CivilState)" />
+        </div>
+
+        <label>Ingresar la ocupación del perfil:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Profile.Occupation" />
+            <ValidationMessage For="@(() => Profile.Occupation)" />
+        </div>
+
+        <label>Ingresar la foto de perfil:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Profile.ProfilePictures" />
+            <ValidationMessage For="@(() => Profile.ProfilePictures)" />
+        </div>
+
+        <label>Ingresar fotos adicionales del perfil:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Profile.AdditionalPhotos" />
+            <ValidationMessage For="@(() => Profile.AdditionalPhotos)" />
+        </div>
+
+        <label>Ingresar link de redes sociales del perfil:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Profile.LinkNetwors" />
+            <ValidationMessage For="@(() => Profile.LinkNetwors)" />
+        </div>
+
+        <label>Ingresar la altura del propietario del perfil:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Profile.Height" />
+            <ValidationMessage For="@(() => Profile.Height)" />
+        </div>
+
+        <label>Ingresar el peso del propietario del perfil:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Profile.Weight" />
+            <ValidationMessage For="@(() => Profile.Weight)" />
+        </div>
+
+        <label>Ingresar la nacionalidad del propietario del perfil:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Profile.Nacionality" />
+            <ValidationMessage For="@(() => Profile.Nacionality)" />
+        </div>
+
+    </div>
+
+    <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+    <button class="btn btn-success" @onclick="ReturnAction">Regresar</button>
+</EditForm>
+
+@code {
+
+    public EditContext editContext = null!;
+
+    protected override void OnInitialized()
+    {
+        editContext = new(Profile);
+    }
+
+
+    [EditorRequired]
+    [Parameter]
+    public Profile Profile { get; set; } = null!;
+
+    [EditorRequired]
+    [Parameter]
+    public EventCallback OnValidSubmit { get; set; }
+
+    [EditorRequired]
+    [Parameter]
+    public EventCallback ReturnAction { get; set; }
+
+
+    public bool FormPostedSuccessfully { get; set; } = false;
+
+    private async Task OnBeforeInternalNavigation(LocationChangingContext context)
+    {
+        var formWasEdited = editContext.IsModified();
+
+        if (!formWasEdited)
+        {
+            return;
+        }
+
+        if (FormPostedSuccessfully)
+        {
+            return;
+        }
+
+        var result = await swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Confirmación",
+                Text = "¿Deseas abandonar la página y perder los cambios?",
+                Icon = SweetAlertIcon.Warning,
+                ShowCancelButton = true
+            });
+
+        var confirm = !string.IsNullOrEmpty(result.Value);
+
+        if (confirm)
+        {
+            return;
+        }
+
+        context.PreventNavigation();
+    }
+}

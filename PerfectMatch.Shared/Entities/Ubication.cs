@@ -12,9 +12,9 @@ namespace PerfectMatch.Shared.Entities
 
         public int Id { get; set; }
 
-        public double Latitude { get; set; }
+        public String Latitude { get; set; }
 
-        public double Length { get; set; }
+        public String Length { get; set; }
 
         public string PlaceName { get; set; }   
     }
