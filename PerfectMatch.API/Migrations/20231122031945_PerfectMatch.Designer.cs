@@ -12,8 +12,8 @@ using PerfectMatch.API.Data;
 namespace PerfectMatch.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231023055517_initialDb")]
-    partial class initialDb
+    [Migration("20231122031945_PerfectMatch")]
+    partial class PerfectMatch
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -172,13 +172,16 @@ namespace PerfectMatch.API.Migrations
 
                     b.Property<string>("Hour")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Place")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Hour")
+                        .IsUnique();
 
                     b.ToTable("Appointments");
                 });
@@ -193,13 +196,16 @@ namespace PerfectMatch.API.Migrations
 
                     b.Property<string>("Date")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Date")
+                        .IsUnique();
 
                     b.ToTable("Comments");
                 });
@@ -214,13 +220,16 @@ namespace PerfectMatch.API.Migrations
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ShippingDate")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Content")
+                        .IsUnique();
 
                     b.ToTable("Messages");
                 });
@@ -235,7 +244,7 @@ namespace PerfectMatch.API.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LinkInfo")
                         .IsRequired()
@@ -246,6 +255,9 @@ namespace PerfectMatch.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Description")
+                        .IsUnique();
 
                     b.ToTable("Notifications");
                 });
@@ -264,9 +276,12 @@ namespace PerfectMatch.API.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Title")
+                        .IsUnique();
 
                     b.ToTable("Posts");
                 });
@@ -359,6 +374,9 @@ namespace PerfectMatch.API.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Latitude")
+                        .IsUnique();
+
                     b.ToTable("Ubications");
                 });
 
@@ -425,7 +443,6 @@ namespace PerfectMatch.API.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Photo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")

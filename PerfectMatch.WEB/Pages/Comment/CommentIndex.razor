@@ -1,5 +1,59 @@
-﻿<h3>CommentIndex</h3>
+﻿@page "/comment"
+@using PerfectMatch.WEB.Repositories;
+@using PerfectMatch.Shared.Entities;
+
+
+@inject IRepository repository
+<h3>CommentIndex</h3>
+
+<div class="mb-3">
+
+    <a class="btn btn-primary" href="/message/create">  Nuevo comentario</a>
+
+</div>
+
+<GenericList MyList="Comments">
+
+    <Body>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Comment</th>
+                    <th></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var comment in Comments!)
+                {
+                    <tr>
+                        <td>
+                            @comment.Description
+                        </td>
+                        <td>
+                            <a class="btn btn-warning">Editar</a>
+                            <button class="btn btn-danger">Borrar</button>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </Body>
+
+</GenericList>
 
 @code {
 
+    public List<Comment>? Comments { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+
+        var responseHttp = await repository.Get<List<Comment>>("/api/comment");
+        Comments = responseHttp.Response!;
+    }
+
 }
+
