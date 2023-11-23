@@ -18,7 +18,7 @@ namespace PerfectMatch.API.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Hour = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Hour = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Place = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -78,7 +78,7 @@ namespace PerfectMatch.API.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Date = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Date = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -91,7 +91,7 @@ namespace PerfectMatch.API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Content = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ShippingDate = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -106,7 +106,7 @@ namespace PerfectMatch.API.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LinkInfo = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -120,7 +120,7 @@ namespace PerfectMatch.API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PublicationDate = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -136,7 +136,7 @@ namespace PerfectMatch.API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     age = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Ubication = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PersonalDescription = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PersonalDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Interests = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SexualOrientation = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     CivilState = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
@@ -159,7 +159,7 @@ namespace PerfectMatch.API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Latitude = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Latitude = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Length = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PlaceName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -275,12 +275,6 @@ namespace PerfectMatch.API.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Appointments_Hour",
-                table: "Appointments",
-                column: "Hour",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
@@ -318,42 +312,6 @@ namespace PerfectMatch.API.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comments_Date",
-                table: "Comments",
-                column: "Date",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Messages_Content",
-                table: "Messages",
-                column: "Content",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Notifications_Description",
-                table: "Notifications",
-                column: "Description",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Posts_Title",
-                table: "Posts",
-                column: "Title",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Profiles_PersonalDescription",
-                table: "Profiles",
-                column: "PersonalDescription",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Ubications_Latitude",
-                table: "Ubications",
-                column: "Latitude",
-                unique: true);
         }
 
         /// <inheritdoc />

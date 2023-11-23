@@ -6,7 +6,7 @@ using PerfectMatch.API.Data;
 using PerfectMatch.Shared.Entities;
 namespace PerfectMatch.API.Controllers
 {
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+   
     [ApiController]
     [Route("/api/ubication")]
     public class UbicationController: ControllerBase

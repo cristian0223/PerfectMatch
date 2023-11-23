@@ -20,14 +20,6 @@ namespace PerfectMatch.API.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Profile>().HasIndex(c => c.PersonalDescription).IsUnique();
-            modelBuilder.Entity<Appointment>().HasIndex(c => c.Hour).IsUnique();
-            modelBuilder.Entity<Ubication>().HasIndex(c => c.Latitude).IsUnique();
-            modelBuilder.Entity<Notification>().HasIndex(c => c.Description).IsUnique();
-            modelBuilder.Entity<Message>().HasIndex(c => c.Content).IsUnique();
-            modelBuilder.Entity<Comment>().HasIndex(c => c.Date).IsUnique();
-            modelBuilder.Entity<Post>().HasIndex(c => c.Title).IsUnique();
-
 
 
         }

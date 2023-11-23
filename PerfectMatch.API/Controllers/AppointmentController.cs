@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace PerfectMatch.API.Controllers
 {
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
     [ApiController]
     [Route("/api/Appointment")]
     public class AppointmentController : ControllerBase

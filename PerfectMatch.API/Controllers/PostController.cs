@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace PerfectMatch.API.Controllers
 {
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
     [ApiController]
     [Route("/api/post")]
     public class PostController : ControllerBase
