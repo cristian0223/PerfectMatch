@@ -1,14 +1,16 @@
 ﻿@page "/appointment"
+@using PerfectMatch.WEB.Shared
 @using PerfectMatch.WEB.Repositories;
 @using PerfectMatch.Shared.Entities;
-
+@inject NavigationManager navigationManager
+@inject SweetAlertService swal
 
 @inject IRepository repository
 <h3>AppointmentIndex</h3>
 
 <div class="mb-3">
 
-    <a class="btn btn-primary" href="/message/create">  Nueva cita</a>
+    <a class="btn btn-primary" href="/appointment/create">  Nueva cita</a>
 
 </div>
 
@@ -18,8 +20,9 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Appointment</th>
-                    <th></th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Lugar</th>
 
                 </tr>
             </thead>
@@ -28,11 +31,17 @@
                 {
                     <tr>
                         <td>
+                            @appointment.Date
+                        </td>
+                        <td>
+                            @appointment.Hour
+                        </td>
+                        <td>
                             @appointment.Place
                         </td>
                         <td>
-                            <a class="btn btn-warning">Editar</a>
-                            <button class="btn btn-danger">Borrar</button>
+                            <a class="btn btn-warning" href="/appointment/edit/@appointment.Id">Editar</a>
+                            <button class="btn btn-danger" @onclick=@(() => Delete(appointment))>Borrar</button>
                         </td>
 
                     </tr>
@@ -50,9 +59,50 @@
 
     protected async override Task OnInitializedAsync()
     {
+        await Load();
+    }
 
-        var responseHttp = await repository.Get<List<Appointment>>("/api/appointment");
-        Appointments = responseHttp.Response!;
+    private async Task Load()
+    {
+        var responseHppt = await repository.Get<List<Appointment>>("api/appointment");
+        Appointments = responseHppt.Response!;
+    }
+
+    private async Task Delete(Appointment Appointment)
+    {
+        var result = await swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Confirmación",
+                Text = "¿Esta seguro que quieres borrar el registro?",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true
+            });
+
+        var confirm = string.IsNullOrEmpty(result.Value);
+
+        if (confirm)
+        {
+            return;
+        }
+
+        var responseHTTP = await repository.Delete($"api/appointment/{Appointment.Id}");
+
+        if (responseHTTP.Error)
+        {
+            if (responseHTTP.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                navigationManager.NavigateTo("/");
+            }
+            else
+            {
+                var mensajeError = await responseHTTP.GetErrorMessage();
+                await swal.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+            }
+        }
+        else
+        {
+            await Load();
+        }
     }
 
 }

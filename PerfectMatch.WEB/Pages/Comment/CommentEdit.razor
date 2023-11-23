@@ -1,0 +1,67 @@
+﻿@page "/comment/edit/{id:int}"
+@using PerfectMatch.Shared.Entities;
+@inject NavigationManager navigationManager
+@inject IRepository repository
+@inject SweetAlertService swal
+
+<h3>Editar Comentario</h3>
+
+@if (Comment is null)
+{
+    <p>Cargando...</p>
+}
+else
+{
+    <CommentForm @ref="CommentForm" Comment="Comment" OnValidSubmit="Edit" ReturnAction="Return" />
+}
+
+@code {
+    private Comment? Comment;
+    private CommentForm? CommentForm;
+
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var responseHTTP = await repository.Get<Comment>($"api/comment/{Id}");
+
+        if (responseHTTP.Error)
+        {
+            if (responseHTTP.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                navigationManager.NavigateTo("comment");
+            }
+            else
+            {
+                var messageError = await responseHTTP.GetErrorMessage();
+                await swal.FireAsync("Error", messageError, SweetAlertIcon.Error);
+            }
+        }
+        else
+        {
+            Comment = responseHTTP.Response;
+        }
+    }
+
+    private async Task Edit()
+    {
+        var responseHTTP = await repository.Put("api/comment", Comment);
+
+        if (responseHTTP.Error)
+        {
+            var mensajeError = await responseHTTP.GetErrorMessage();
+            await swal.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+        }
+        else
+        {
+            CommentForm!.FormPostedSuccessfully = true;
+            navigationManager.NavigateTo("comment");
+        }
+    }
+
+    private void Return()
+    {
+        navigationManager.NavigateTo("comment");
+    }
+}

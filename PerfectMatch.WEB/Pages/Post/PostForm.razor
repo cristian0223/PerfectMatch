@@ -8,22 +8,16 @@
     <DataAnnotationsValidator />
     <div class="mb-3">
 
-        <label>Ingresar la latitud de la ubicación:</label>
+        <label>Ingresar el titulo:</label>
         <div>
-            <InputText class="form-control" @bind-Value="@Ubication.Latitude" />
-            <ValidationMessage For="@(() => Ubication.Latitude)" />
+            <InputText class="form-control" @bind-Value="@Post.Title" />
+            <ValidationMessage For="@(() => Post.Title)" />
         </div>
 
-        <label>Ingresar la longitud de la ubicación:</label>
+        <label>Ingresar la fecha de publicación:</label>
         <div>
-            <InputText class="form-control" @bind-Value="@Ubication.Length" />
-            <ValidationMessage For="@(() => Ubication.Length)" />
-        </div>
-
-        <label>Ingresar el nombre de la ubicación:</label>
-        <div>
-            <InputText class="form-control" @bind-Value="@Ubication.PlaceName" />
-            <ValidationMessage For="@(() => Ubication.PlaceName)" />
+            <InputText class="form-control" @bind-Value="@Post.PublicationDate" />
+            <ValidationMessage For="@(() => Post.PublicationDate)" />
         </div>
 
 
@@ -39,13 +33,13 @@
 
     protected override void OnInitialized()
     {
-        editContext = new(Ubication);
+        editContext = new(Post);
     }
 
 
     [EditorRequired]
     [Parameter]
-    public Ubication Ubication { get; set; } = null!;
+    public Post Post { get; set; } = null!;
 
     [EditorRequired]
     [Parameter]

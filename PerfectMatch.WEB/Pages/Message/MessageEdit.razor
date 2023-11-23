@@ -1,0 +1,67 @@
+﻿@page "/message/edit/{id:int}"
+@using PerfectMatch.Shared.Entities;
+@inject NavigationManager navigationManager
+@inject IRepository repository
+@inject SweetAlertService swal
+
+<h3>Editar Mensaje</h3>
+
+@if (Message is null)
+{
+    <p>Cargando...</p>
+}
+else
+{
+    <MessageForm @ref="MessageForm" Message="Message" OnValidSubmit="Edit" ReturnAction="Return" />
+}
+
+@code {
+    private Message? Message;
+    private MessageForm? MessageForm;
+
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var responseHTTP = await repository.Get<Message>($"api/message/{Id}");
+
+        if (responseHTTP.Error)
+        {
+            if (responseHTTP.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                navigationManager.NavigateTo("message");
+            }
+            else
+            {
+                var messageError = await responseHTTP.GetErrorMessage();
+                await swal.FireAsync("Error", messageError, SweetAlertIcon.Error);
+            }
+        }
+        else
+        {
+            Message = responseHTTP.Response;
+        }
+    }
+
+    private async Task Edit()
+    {
+        var responseHTTP = await repository.Put("api/message", Message);
+
+        if (responseHTTP.Error)
+        {
+            var mensajeError = await responseHTTP.GetErrorMessage();
+            await swal.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+        }
+        else
+        {
+            MessageForm!.FormPostedSuccessfully = true;
+            navigationManager.NavigateTo("message");
+        }
+    }
+
+    private void Return()
+    {
+        navigationManager.NavigateTo("message");
+    }
+}

@@ -8,22 +8,22 @@
     <DataAnnotationsValidator />
     <div class="mb-3">
 
-        <label>Ingresar la latitud de la ubicación:</label>
+        <label>Ingresar el titulo de la notificación:</label>
         <div>
-            <InputText class="form-control" @bind-Value="@Ubication.Latitude" />
-            <ValidationMessage For="@(() => Ubication.Latitude)" />
+            <InputText class="form-control" @bind-Value="@Notification.Title" />
+            <ValidationMessage For="@(() => Notification.Title)" />
         </div>
 
-        <label>Ingresar la longitud de la ubicación:</label>
+        <label>Ingresar la descripción:</label>
         <div>
-            <InputText class="form-control" @bind-Value="@Ubication.Length" />
-            <ValidationMessage For="@(() => Ubication.Length)" />
+            <InputText class="form-control" @bind-Value="@Notification.Description" />
+            <ValidationMessage For="@(() => Notification.Description)" />
         </div>
 
-        <label>Ingresar el nombre de la ubicación:</label>
+        <label>Ingresar el link de la información:</label>
         <div>
-            <InputText class="form-control" @bind-Value="@Ubication.PlaceName" />
-            <ValidationMessage For="@(() => Ubication.PlaceName)" />
+            <InputText class="form-control" @bind-Value="@Notification.LinkInfo" />
+            <ValidationMessage For="@(() => Notification.LinkInfo)" />
         </div>
 
 
@@ -39,13 +39,13 @@
 
     protected override void OnInitialized()
     {
-        editContext = new(Ubication);
+        editContext = new(Notification);
     }
 
 
     [EditorRequired]
     [Parameter]
-    public Ubication Ubication { get; set; } = null!;
+    public Notification Notification { get; set; } = null!;
 
     [EditorRequired]
     [Parameter]

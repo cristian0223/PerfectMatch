@@ -1,0 +1,38 @@
+﻿@page "/notification/create"
+@using PerfectMatch.Shared.Entities;
+@inject IRepository repository
+@inject NavigationManager navigationManager
+@inject SweetAlertService sweetAlertService
+
+<h3>Crear Post</h3>
+
+<NotificationForm @ref="NotificationForm" Notification="Notification" OnValidSubmit="Create" ReturnAction="Return" />
+
+@code {
+    private Notification Notification = new();
+
+    private NotificationForm? NotificationForm;
+
+    private async Task Create()
+    {
+        var responseHttp = await repository.Post("/api/notification", Notification);
+        if (responseHttp.Error)
+        {
+            var message = await responseHttp.GetErrorMessage();
+            await sweetAlertService.FireAsync("Error", message);
+            return;
+        }
+        else
+        {
+
+            NotificationForm!.FormPostedSuccessfully = true;
+            navigationManager.NavigateTo("/notification");
+
+        }
+    }
+
+    private void Return()
+    {
+        navigationManager.NavigateTo("/notification");
+    }
+}

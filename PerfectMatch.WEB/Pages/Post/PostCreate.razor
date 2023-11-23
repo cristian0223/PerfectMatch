@@ -1,21 +1,21 @@
-﻿@page "/ubication/create"
+﻿@page "/post/create"
 @using PerfectMatch.Shared.Entities;
 @inject IRepository repository
 @inject NavigationManager navigationManager
 @inject SweetAlertService sweetAlertService
 
-<h3>Crear Perfil</h3>
+<h3>Crear Post</h3>
 
-<UbicationForm @ref="UbicationForm" Ubication="Ubication" OnValidSubmit="Create" ReturnAction="Return" />
+<PostForm @ref="PostForm" Post="Post" OnValidSubmit="Create" ReturnAction="Return" />
 
 @code {
-    private Ubication Ubication = new();
+    private Post Post = new();
 
-    private UbicationForm? UbicationForm;
+    private PostForm? PostForm;
 
     private async Task Create()
     {
-        var responseHttp = await repository.Post("/api/ubication", Ubication);
+        var responseHttp = await repository.Post("/api/post", Post);
         if (responseHttp.Error)
         {
             var message = await responseHttp.GetErrorMessage();
@@ -25,14 +25,14 @@
         else
         {
 
-            UbicationForm!.FormPostedSuccessfully = true;
-            navigationManager.NavigateTo("/ubication");
+            PostForm!.FormPostedSuccessfully = true;
+            navigationManager.NavigateTo("/post");
 
         }
     }
 
     private void Return()
     {
-        navigationManager.NavigateTo("/ubication");
+        navigationManager.NavigateTo("/post");
     }
 }

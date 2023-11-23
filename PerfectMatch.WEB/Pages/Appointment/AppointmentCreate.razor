@@ -1,0 +1,38 @@
+﻿@page "/appointment/create"
+@using PerfectMatch.Shared.Entities;
+@inject IRepository repository
+@inject NavigationManager navigationManager
+@inject SweetAlertService sweetAlertService
+
+<h3>Crear Cita</h3>
+
+<AppointmentForm @ref="AppointmentForm" Appointment="Appointment" OnValidSubmit="Create" ReturnAction="Return" />
+
+@code {
+    private Appointment Appointment = new();
+
+    private AppointmentForm? AppointmentForm;
+
+    private async Task Create()
+    {
+        var responseHttp = await repository.Post("/api/appointment", Appointment);
+        if (responseHttp.Error)
+        {
+            var message = await responseHttp.GetErrorMessage();
+            await sweetAlertService.FireAsync("Error", message);
+            return;
+        }
+        else
+        {
+
+            AppointmentForm!.FormPostedSuccessfully = true;
+            navigationManager.NavigateTo("/appointment");
+
+        }
+    }
+
+    private void Return()
+    {
+        navigationManager.NavigateTo("/appointment");
+    }
+}

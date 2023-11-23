@@ -1,7 +1,9 @@
 ﻿@page "/post"
+@using PerfectMatch.WEB.Shared
 @using PerfectMatch.WEB.Repositories;
 @using PerfectMatch.Shared.Entities;
-
+@inject NavigationManager navigationManager
+@inject SweetAlertService swal
 
 @inject IRepository repository
 <h3>PostIndex</h3>
@@ -18,8 +20,8 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Post</th>
-                    <th></th>
+                    <th>Titulo</th>
+                    <th>Fecha de publicación</th>
 
                 </tr>
             </thead>
@@ -31,8 +33,11 @@
                             @post.Title
                         </td>
                         <td>
-                            <a class="btn btn-warning">Editar</a>
-                            <button class="btn btn-danger">Borrar</button>
+                            @post.PublicationDate
+                        </td>
+                        <td>
+                            <a class="btn btn-warning" href="/post/edit/@post.Id">Editar</a>
+                            <button class="btn btn-danger" @onclick=@(() => Delete(post))>Borrar</button>
                         </td>
 
                     </tr>
@@ -50,9 +55,50 @@
 
     protected async override Task OnInitializedAsync()
     {
+        await Load();
+    }
 
-        var responseHttp = await repository.Get<List<Post>>("/api/post");
-        Posts = responseHttp.Response!;
+    private async Task Load()
+    {
+        var responseHppt = await repository.Get<List<Post>>("api/post");
+        Posts = responseHppt.Response!;
+    }
+
+    private async Task Delete(Post Post)
+    {
+        var result = await swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Confirmación",
+                Text = "¿Esta seguro que quieres borrar el registro?",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true
+            });
+
+        var confirm = string.IsNullOrEmpty(result.Value);
+
+        if (confirm)
+        {
+            return;
+        }
+
+        var responseHTTP = await repository.Delete($"api/post/{Post.Id}");
+
+        if (responseHTTP.Error)
+        {
+            if (responseHTTP.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                navigationManager.NavigateTo("/");
+            }
+            else
+            {
+                var mensajeError = await responseHTTP.GetErrorMessage();
+                await swal.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+            }
+        }
+        else
+        {
+            await Load();
+        }
     }
 
 }
